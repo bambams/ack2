@@ -394,6 +394,8 @@ EOT
         'v|invert-match'    => \$opt->{v},
         'w|word-regexp'     => \$opt->{w},
         'x'                 => sub { $opt->{files_from} = '-' },
+        'x-bom'               => sub { $opt->{utf16le} = 'bom' },
+        'x-utf16le'          => sub { $opt->{utf16le} = 'utf16le' },
 
         'version'           => sub { App::Ack::print_version_statement(); exit; },
         'help|?:s'          => sub { shift; App::Ack::show_help(@_); exit; },

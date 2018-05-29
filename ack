@@ -47,6 +47,8 @@ our $opt_L;
 our $opt_l;
 our $opt_passthru;
 our $opt_column;
+our $opt_bom;
+our $opt_utf16le;
 
 # Flag if we need any context tracking.
 our $is_tracking_context;
@@ -858,6 +860,8 @@ sub main {
     $opt_l              = $opt->{l};
     $opt_passthru       = $opt->{passthru};
     $opt_column         = $opt->{column};
+    $opt_bom            = $opt->{bom};
+    $opt_utf16le        = $opt->{utf16le};
 
     $App::Ack::report_bad_filenames = !$opt->{dont_report_bad_filenames};
 

@@ -52,7 +52,9 @@ sub from_argv {
     my $opt   = shift;
     my $start = shift;
 
-    my $self = bless {}, $class;
+    my $self = bless {
+        utf16le => $opt->{utf16le},
+    }, $class;
 
     my $file_filter    = undef;
     my $descend_filter = $opt->{descend_filter};
@@ -97,6 +99,7 @@ sub from_file {
 
     return bless {
         iter => $iter,
+        utf16le => $opt->{utf16le},
     }, $class;
 }
 
@@ -105,7 +108,9 @@ sub from_stdin {
     my $class = shift;
     my $opt   = shift;
 
-    my $self  = bless {}, $class;
+    my $self  = bless {
+        utf16le => undef,
+    }, $class;
 
     my $has_been_called = 0;
 
@@ -125,7 +130,7 @@ sub next {
 
     my $file = $self->{iter}->() or return;
 
-    return App::Ack::Resource->new( $file );
+    return App::Ack::Resource->new( $file, $self->{utf16le} );
 }
 
 1;

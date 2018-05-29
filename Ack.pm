@@ -358,6 +358,9 @@ File type specification:
                                 given FILTER are recognized as being type TYPE.
   --type-del TYPE               Removes all filters associated with TYPE.
 
+  --x-bom                       Open the files with :via(File::BOM).
+  --x-utf16le                   Open the files with :encoding(UTF-16LE).
+
 
 Miscellaneous:
   --[no]env                     Ignore environment variables and global ackrc

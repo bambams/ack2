@@ -29,16 +29,19 @@ If there's a failure, it throws a warning and returns an empty list.
 sub new {
     my $class    = shift;
     my $filename = shift;
+    my $utf16le  = shift;
 
     my $self = bless {
         filename => $filename,
         fh       => undef,
         opened   => 0,
+        utf16le  => $utf16le,
     }, $class;
 
     if ( $self->{filename} eq '-' ) {
         $self->{fh}     = *STDIN;
         $self->{opened} = 1;
+        $self->{utf16le} = undef;
     }
 
     return $self;
@@ -87,7 +90,15 @@ sub open {
     my ( $self ) = @_;
 
     if ( !$self->{opened} ) {
-        if ( open $self->{fh}, '<', $self->{filename} ) {
+        my $layers = defined $self->{utf16le} ?
+                (
+                    $self->{utf16le} eq 'bom' ?
+                    " :via(File::BOM)" :
+                    " :encoding(UTF-16LE)"
+                ):
+                '';
+
+        if ( open $self->{fh}, '<' . $layers, $self->{filename} ) {
             $self->{opened} = 1;
         }
         else {
